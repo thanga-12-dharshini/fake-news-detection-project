@@ -6,26 +6,71 @@
     <title>Fake News Detection</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white shadow-lg p-8 rounded-xl w-[500px] text-center">
-        <h1 class="text-3xl font-bold text-blue-700">Fake News Detection</h1>
-        <p class="text-sm text-gray-600">Powered by Machine Learning & NLP</p>
+<body class="bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center min-h-screen relative">
+
+    <div class="bg-white shadow-2xl p-8 rounded-2xl w-[500px] text-center">
+        <h1 class="text-4xl font-extrabold text-blue-700">Fake News Detection</h1>
+        <p class="text-sm text-gray-600 mt-2">Powered by Machine Learning & NLP</p>
         
         <textarea id="newsInput" placeholder="Paste your news article here..." 
-            class="w-full mt-4 p-3 border rounded-lg focus:ring"></textarea>
+            class="w-full mt-4 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 shadow-md resize-none h-40"></textarea>
         
-        <div class="mt-4">
-            <button onclick="analyzeNews()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-                Analyze
+        <div class="mt-6 flex justify-center gap-4">
+            <button onclick="analyzeNews()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md">
+                🔍 Analyze
             </button>
-            <button onclick="clearText()" class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500">
-                Clear
+            <button onclick="clearText()" class="bg-gray-400 text-white px-6 py-3 rounded-lg hover:bg-gray-500 transition-all duration-300 shadow-md">
+                ❌ Clear
             </button>
         </div>
 
-        <p id="result" class="mt-4 text-lg font-semibold"></p>
+        <!-- Prediction Result -->
+        <div id="result-container" class="hidden mt-6 pb-8"> <!-- Added padding-bottom -->
+            <h2 class="text-xl font-semibold text-gray-700">Prediction Result:</h2>
+            <p id="result-text" class="text-2xl font-bold mt-2"></p>
+
+            <!-- Confidence Score -->
+            <div class="mt-4">
+                <h3 class="text-lg text-gray-600">Confidence Score:</h3>
+                <div class="relative w-full bg-gray-300 h-4 rounded-full">
+                    <div id="confidence-bar" class="absolute top-0 left-0 h-4 bg-green-500 rounded-full transition-all duration-500"></div>
+                </div>
+                <p id="confidence-score" class="text-sm text-gray-700 mt-2"></p>
+            </div>
+        </div>
     </div>
 
-    <script src="./script.js"></script> <!-- Linking the JS file -->
+    <footer class="w-full absolute bottom-2 text-center text-gray-600 text-sm">
+        © 2025 Fake News Detection | Developed by <span class="font-semibold text-blue-700">Thangadharshini</span>
+    </footer>
+
+    <script>
+        function analyzeNews() {
+            let text = document.getElementById("newsInput").value;
+            if (text.trim() === "") {
+                alert("Please enter some text to analyze.");
+                return;
+            }
+
+            // Simulated Prediction (Replace with real backend call)
+            let isFake = Math.random() > 0.5; // Randomly predict Fake or Real
+            let confidence = (Math.random() * 40 + 60).toFixed(2); // Confidence between 60-100%
+
+            // Display result
+            document.getElementById("result-container").classList.remove("hidden");
+            document.getElementById("result-text").innerText = isFake ? "❌ Fake News" : "✅ Real News";
+            document.getElementById("result-text").className = isFake ? "text-red-600 text-2xl font-bold mt-2" : "text-green-600 text-2xl font-bold mt-2";
+
+            // Confidence Score Bar
+            document.getElementById("confidence-bar").style.width = confidence + "%";
+            document.getElementById("confidence-score").innerText = "Confidence: " + confidence + "%";
+        }
+
+        function clearText() {
+            document.getElementById("newsInput").value = "";
+            document.getElementById("result-container").classList.add("hidden");
+        }
+    </script>
+
 </body>
 </html>
