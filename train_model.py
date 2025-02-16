@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 import joblib
 
+
 # Load dataset
 df = pd.read_csv("news_dataset.csv")
 
